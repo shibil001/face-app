@@ -1,0 +1,158 @@
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<form id="form1" name="form1" method="post" action="/myapp/view_attendence_post/#grids-3">
+    {% csrf_token %}
+<table  class="pull-left">
+     <tr>
+
+
+         <td style="padding: 5px;">
+            <select name="select3" class="form-control" id="courseobj">
+
+            <option value="-1">Choose Course</option>
+            {% for i in d %}
+            <option value="{{ i.id }}">{{i.CourseName}}</option>
+            {% endfor %}
+            </select>
+        </td>
+
+        <td style="padding: 5px;">
+            <select name="select" class="form-control" id="sem" required>
+
+                <option value="-1">Choose</option>
+                <option value="1">{{ 1 }}</option>
+                <option value="2">{{ 2 }}</option>
+                <option value="3">{{ 3 }}</option>
+                <option value="4">{{ 4 }}</option>
+                <option value="5">{{ 5 }}</option>
+                <option value="6">{{ 6 }}</option>
+            </select>
+        </td>
+
+
+      <td style="padding: 5px;">Year</td>
+         <td><input type="number" required class="form-control" value="{{ yr }}" name="year"/></td>
+
+         <td style="padding: 5px;">Month</td>
+         <td style="padding: 5px;">
+             <select name="month" class="form-control">
+                 <option value="1">January</option>
+                 <option value="2">February</option>
+                 <option value="3">March</option>
+                 <option value="4">April</option>
+                 <option value="5">May</option>
+                 <option value="6">June</option>
+                 <option value="7">July</option>
+                 <option value="8">August</option>
+                 <option value="9">September</option>
+                 <option value="10">October</option>
+                 <option value="11">November</option>
+                 <option value="12">December</option>
+             </select>
+         </td>
+        <td><input type="submit" class="btn btn-info" name="button" value="Search" /></td>
+    </tr>
+</table>
+<br><br>
+<table class="table table-bordered table-striped">
+    <tr>
+        <th width="50px">Slno</th>
+        <th>Name</th>
+        {% for i in dates %}
+        <th width="50px" >{{ i }}</th>
+        {% endfor %}
+
+    </tr>
+
+       {% for i in data %}
+
+           <tr>
+           <td width="50px">{{ forloop.counter }}</td>
+           <td>{{ i.student }}</td>
+
+           {% for k in i.attendance %}
+               <td width="50px"> {{ k.MRNG }}: {{ k.NOON }}</td>
+
+           {% endfor %}
+
+
+
+
+
+
+           </tr>
+{#    <tr>#}
+{#    <td>{{ forloop.counter }}</td>#}
+{#         <td>{{i.Attend_Date}}</td>#}
+{#      <td>{{i.Hour}}</td>#}
+{#    <td>{{ i.STUDENT.Name }}</td>#}
+{#              <td>{{i.Semester}}</td>#}
+{##}
+{#        <td>{{ i.SUBJECT.Subject_Name }}</td>#}
+{#        <td>{{ i.CLASS_ID.Department_Name }}</td>#}
+{##}
+{#        <td>{{i.attendence_mark }}</td>#}
+{##}
+{#      </tr>#}
+       {% endfor %}
+    </table>
+</form>
+
+    <script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+
+{#    //jquery part#}
+
+
+
+    <script>
+    	$(document).ready(function(){
+
+
+
+    	  $(document).on('change', '#courseobj', function(){
+
+    	       var courseid=$("#courseobj").val();
+
+                $.ajax({
+                url: "/myapp/gettotalsembycourseid/"+ courseid,
+                type: "GET",
+                data: {
+
+
+                },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function(dat) {
+
+
+                     $("#sem").empty();
+                      $("#sem").append("<option value=''>Choose</option>");
+
+                    for(var i=1; i<=parseInt(dat.sem);i++)
+                    {
+
+                        $("#sem").append("  <option value='"+i+"'>"+i+"</option>");
+                    }
+
+
+
+                },
+                error: function(ts) {
+                 }
+                });
+
+
+
+
+
+
+          });
+
+
+
+
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,196 @@
+{% extends 'admin/adminindex.html' %}
+{% block body %}
+<form id="form1" name="form1" method="post" action="/myapp/sadm_view_timetable_post/#grids-3">
+           <h1 style="font-size:30px;" align="center" class="btn-primary"><b><i>VIEW TIMETABLE</i></b></h1>
+
+<form id="form1" name="form1" method="post" action="/myapp/view_timetable_1_post/#grids-3">
+{% csrf_token %}
+
+  <table class="pull-left">
+    <tr>
+      <th>
+          Course</th>
+        <td><select name="Course" id="cls" class="form-control">
+   {% for i in data %}
+
+       <option value="{{ i.id }}">{{ i.CourseName }}</option>
+            {% endfor %}
+    </select></td>
+      <th>Sem</th>
+      <td><select name="dropdown2" id="div" class="form-control">
+            <option value="1">{{ 1 }}</option>
+            <option value="2">{{ 2 }}</option>
+            <option value="3">{{ 3 }}</option>
+            <option value="4">{{ 4 }}</option>
+            <option value="5">{{ 5 }}</option>
+            <option value="6">{{ 6 }}</option>
+          </select></td>
+      <td><input type="submit" name="SHOW" id="SHOW" value="SHOW" class="btn btn-success" /></td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+
+{% if i == 1 %}
+
+  <table class="table table-bordered table-hover" >
+    <tr>
+      <th width="156" scope="col">DAY</th>
+      <th width="88" scope="col">HOUR1</th>
+      <th width="88" scope="col">HOUR2</th>
+      <th width="88" scope="col">HOUR3</th>
+      <th width="88" scope="col">HOUR4</th>
+      <th width="200" scope="col">HOUR5</th>
+
+    </tr>
+    <tr>
+      <th scope="row"><div align="left">MONDAY</div></th>
+      <td>{{ data2.0 }}</td>
+{#      <td>{{ timetable.0.0 }}</td>#}
+      <td>{{ timetable.0.1 }}</td>
+      <td>{{ timetable.0.2 }}</td>
+      <td>{{ timetable.0.3 }}</td>
+      <td>{{ timetable.0.4 }}</td>
+
+    </tr>
+    <tr>
+      <th scope="row"><div align="left">TUESDAY</div></th>
+      <td>{{ timetable.1.0 }}</td>
+      <td>{{ timetable.1.1 }}</td>
+      <td>{{ timetable.1.2 }}</td>
+      <td>{{ timetable1.3 }}</td>
+      <td>{{ timetable.1.4 }}</td>
+
+    </tr>
+    <tr>
+      <th scope="row"><div align="left">WEDNESDAY</div></th>
+      <td>{{ timetable.2.0 }}</td>
+      <td>{{ timetable.2.1 }}</td>
+      <td>{{ timetable.2.2 }}&nbsp;</td>
+      <td>{{ timetable.2.3 }}&nbsp;</td>
+      <td>{{ timetable.2.4 }}&nbsp;</td>
+
+    </tr>
+    <tr>
+      <th scope="row"><div align="left">THURSDAY</div></th>
+      <td>{{ timetable.3.0 }}</td>
+      <td>{{ timetable.3.1 }}&nbsp;</td>
+      <td>{{ timetable.3.2 }}&nbsp;</td>
+      <td>{{ timetable.3.3 }}&nbsp;</td>
+      <td>{{ timetable.3.4 }}&nbsp;</td>
+
+    </tr>
+    <tr>
+      <th scope="row"><div align="left">FRIDAY</div></th>
+      <td>{{ timetable.4.0 }}&nbsp;</td>
+      <td>{{ timetable.4.1 }}&nbsp;</td>
+      <td>{{ timetable.4.2 }}&nbsp;</td>
+      <td>{{ timetable.4.3 }}&nbsp;</td>
+      <td>{{ timetable.4.4 }}&nbsp;</td>
+
+    </tr>
+  </table>
+
+{% endif %}
+  <p>&nbsp;</p>
+
+
+
+</form>
+
+
+
+
+<script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+<script  type="text/javascript" >
+
+
+  $(document).on('change','#cls',function () {
+
+
+
+      $.ajax({
+          url: "/myapp/load_div_on_class_1/",
+          type: "POST",
+          data: {
+              'cid': $(this).val()
+          },
+          dataType: "json",
+          success: function (dat) {
+
+              $("#div").empty();
+              var d = dat['data'];
+
+              for (var i = 0; i < d.length; i++) {
+
+                  $("#div").append("<option value='" + d[i]["id"] + "'>" + d[i]["div"] + "</option>");
+
+{#                  $("#select2").append("<option value='" + data[i]["id"] + "'>" + data[i]["div"] + "</option>")#}
+              }
+
+          },
+          error: function (ts) {
+
+              alert('no');
+
+          },
+          complete: function (ts) {
+
+          }
+      });
+
+
+  });
+
+
+{#  $(document).on('change','#select',function () {#}
+{##}
+{#      var cid = $('#select').find(":selected").val();#}
+{##}
+{##}
+{#            $.ajax({#}
+{#            url: "/getbatch",#}
+{#            type: "POST",#}
+{#            data: {#}
+{##}
+{#                'cid':cid#}
+{##}
+{##}
+{#            },#}
+{#            dataType: "json",#}
+{#            success: function(dat) {#}
+{##}
+{#                $("#select4").empty();#}
+{#                var d=dat['data'];#}
+{#                for(var i=0;i<=d.length;i++)#}
+{#                {#}
+{#                    $("#select4").append("<option value='"+d[i]['batchid']+"'>"+d[i]['intake']+'-'+d[i]['yearofend']+"</option>")#}
+{#                }#}
+{##}
+{#            },#}
+{#            error: function(ts) {#}
+{##}
+{#                alert('no');#}
+{##}
+{#            },#}
+{#            complete:function (ts) {#}
+{##}
+{#            }#}
+{#        });#}
+{#      #}
+{#  });#}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

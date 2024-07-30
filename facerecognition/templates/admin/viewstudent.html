@@ -1,0 +1,85 @@
+{% extends 'admin/adminindex.html' %}
+
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="/myapp/viewstudent_post/#grids-3">
+{% csrf_token %}
+  <table class="pull-left">
+    <tr>
+      <td>
+      <input type="text" placeholder="search with name" name="textfield" id="textfield" class="form-control"/></td>
+      <td><input type="submit" value="Search" name="s" class="btn btn-success"></td>
+
+      <td style="padding-left: 50px"><select name="course" class="form-control">
+          <option>Choose Course</option>
+          {% for i in c %}
+            <option value="{{ i.id }}">{{ i.CourseName }}</option>
+          {% endfor %}
+      </select></td>
+        <td><select name="semester" class="form-control">
+          <option value="0">Choose semester
+            <option value="1">Semester1</option>
+            <option value="2">Semester2</option>
+            <option value="3">Semester3</option>
+            <option value="4">Semester4</option>
+            <option value="5">Semester5</option>
+            <option value="6">Semester6</option>
+      </select></td>
+      <td>
+          <input type="submit" value="Go" name="s" class="btn btn-success"></td>
+    </tr>
+  </table>
+<br>
+  <table  class="table table-bordered">
+    <tr>
+      <th>SLNO</th>
+      <th>Name</th>
+        <th>Photo</th>
+          <th>Gender</th>
+      <th>DOB</th>
+      <th>Address</th>
+      <th>Course</th>
+        <th>Semester</th>
+      <th> contact</th>
+        <th>Email</th>
+      <th>Parent contact</th>
+
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+      {% for i in data %}
+    <tr>
+      <td width="50px">{{ forloop.counter }}</td>
+      <td>{{ i.Name }}&nbsp;</td>
+        <td><img src="{{ i.Image }}" height="100px" width="100px"></td>
+          <td>{{ i.Gender }}&nbsp;</td>
+      <td>{{ i.DOB }}&nbsp;</td>
+      <td>{{ i.HouseName }},<br>
+          {{ i.Place }},<br>
+          {{ i.Pin }},<br>
+          {{ i.Post }}
+          &nbsp;</td>
+      <td>{{ i.COURSE.CourseName }}&nbsp;</td>
+        <td>{{ i.Sem }}</td>
+      <td>{{ i.Phone }}&nbsp;</td>
+        <td>{{ i.Email }}</td>
+      <td>{{ i.ParentName }},<br>
+          {{ i.ParentPhone }}&nbsp;</td>
+
+      <td width="50px"><a href="/myapp/editstudent/{{ i.id }}#grids-3"class="btn btn-success">Edit</a></td>
+      <td width="50px"><a href="/myapp/deletestudent/{{ i.id }}"class="btn btn-danger" onclick="return confirm('Are you delete')">Delete</a></td>
+    </tr>
+      {% endfor %}
+
+  </table>
+</form>
+</body>
+</html>
+{% endblock %}

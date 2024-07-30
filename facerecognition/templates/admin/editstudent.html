@@ -1,0 +1,113 @@
+{% extends 'admin/adminindex.html' %}
+
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="/myapp/editstudent_post/" enctype="multipart/form-data">
+{% csrf_token %}
+  <table  class="table table-bordered">
+    <tr>
+      <th>Edit Name</th>
+      <td>
+      <input type="text" required pattern="[A-Z a-z]+" value="{{ data1.Name }}" name="textfield" id="textfield" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Course</th>
+      <td>
+        <select name="select" id="select" class="form-control">
+            {% for i in data %}
+            <option value="{{ i.id }}">{{ i.CourseName }}</option>
+            {% endfor %}
+      </select></td>
+    </tr>
+     <tr>
+         <th>Semester</th>
+      <td><select name="radio1" class="form-control">
+          <option value="1" {% if data.Sem == "1" %} selected {% endif %}>1</option>
+          <option value="2"  {% if data.Sem == "2" %} selected {% endif %}>2</option>
+          <option value="3"  {% if data.Sem == "3" %} selected {% endif %}>3</option>
+           <option value="4"  {% if data.Sem == "4" %} selected {% endif %}>4</option>
+           <option value="5"  {% if data.Sem == "5" %} selected {% endif %}>5</option>
+          <option value="6"  {% if data.Sem == "6" %} selected {% endif %}>6</option>
+
+
+      </select>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Image</th>
+      <td><img src="{{ data1.Image }}" height="100px" width="100px">
+      &nbsp;<input type="file" name="filefield" id="filefield" class="form-control"/>
+      &nbsp;<input type="hidden" name="id" id="" value="{{ data1.id }}" />
+      </td>
+    </tr>
+     <tr>
+      <th>Gender</th>
+      <td><select name="radio" class="form-control">
+          <option>Male</option>
+          <option>Female</option>
+          <option>others</option>
+
+      </select>
+      </td>
+     </tr>
+      <tr>
+      <th>DOB</th>
+      <td>
+          <input type="date"  required value="{{ data1.DOB | date:'Y-m-d' }}"  name="textfield1" id="textfield1"/></td>
+    </tr>
+  <tr>
+      <th>Email</th>
+      <td><input type="email" required value="{{ data1.Email }}" name="textfield9" id="textfield9" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Pin</th>
+      <td>
+      <input type="text"  required pattern="[0-9]{6}" max="6" value="{{ data1.Pin }}" name="textfield2" id="textfield2" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Post</th>
+      <td>
+      <input type="text"  required value="{{ data1.Post }}" name="textfield3" id="textfield3" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Phone</th>
+      <td>
+      <input type="text" required  pattern="[6789][0-9]{9}" max="9" value="{{ data1.Phone }}" name="textfield4" id="textfield4" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>House Name</th>
+      <td>
+      <input type="text"  required  value="{{ data1.HouseName }}" name="textfield5" id="textfield5" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Place</th>
+      <td>
+      <input type="text"  required value="{{ data1.Place }}" name="textfield6" id="textfield6" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Parent Name</th>
+      <td>
+      <input type="text"  required pattern="[A-Z a-z]+"  value="{{ data1.ParentName }}" name="textfield7" id="textfield7" class="form-control"/></td>
+    </tr>
+    <tr>
+      <th>Parent Phone</th>
+      <td>
+      <input type="text"  required  pattern="[6789][0-9]{9}" max="9" value="{{ data1.ParentPhone }}" name="textfield8" id="textfield8" class="form-control"/></td>
+    </tr>
+    <tr align="center">
+
+      <td colspan="2"><input type="submit" name="submit" id="submit" value="Submit" class="btn btn-success"/></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+{% endblock %}

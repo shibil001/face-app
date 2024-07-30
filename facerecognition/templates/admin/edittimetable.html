@@ -1,0 +1,53 @@
+{% extends 'admin/adminindex.html' %}
+
+{% block body %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body><form id="form1" name="form1" method="post" action="/myapp/edittimetable_post/">
+    {%csrf_token%}
+
+<input type="hidden"name="id"value="{{ data1.id }}">
+  <table  class="table table-bordered">
+    <tr>
+      <th>Subject</th>
+      <td>
+        <select name="select" id="select" class="form-control">
+             {% for i in data %}
+            <option value="{{ i.id }} {% if data1.SUBJECT.id == i.id %}select{% endif %}">{{ i.SubjectName }}
+            </option>
+            {% endfor %}
+      </select></td>
+    </tr>
+    <tr>
+      <th>Day</th>
+      <td>
+          <select name="textfield" class="form-control">
+              <option hidden>{{ data1.Day }}</option>
+              <option>monday</option>
+              <option>tuesday</option>
+              <option>wednesday</option>
+              <option>thusday</option>
+              <option>friday</option>
+          </select>
+      </td>
+
+    </tr>
+    <tr>+
+      <th>Hour</th>
+      <td>
+      <input type="text" required name="textfield2" id="textfield" value="{{ data1.Hour }}" class="form-control"/></td>
+    </tr>
+    <tr align="center">
+
+      <td colspan="2"><input type="submit" name="submit" id="submit" value="Submit" class="btn btn-success"/></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>
+{% endblock %}
